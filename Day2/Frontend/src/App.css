@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --base-surface: #f8f9fa;
+  --base-surface-dim: #f1f4f6;
+  --base-surface-card: #ffffff;
+  --base-primary: #525f74;
+  --base-text-main: #2b3437;
+  --base-text-sub: #586064;
+}
+
+.dark {
+  --base-surface: #121212;
+  --base-surface-dim: #1e1e1e;
+  --base-surface-card: #1f1f1f;
+  --base-primary: #a0a8b5;
+  --base-text-main: #e0e0e0;
+  --base-text-sub: #9a9a9a;
+}
+
+
+
+@theme {
+  --font-display: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --color-surface: var(--base-surface);
+  --color-surface-dim: var(--base-surface-dim);
+  --color-surface-card: var(--base-surface-card);
+  --color-primary: var(--base-primary);
+  --color-text-main: var(--base-text-main);
+  --color-text-sub: var(--base-text-sub);
+}
+
+body {
+  @apply bg-surface text-text-main font-body antialiased transition-colors duration-300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-display tracking-tight transition-colors duration-300;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
