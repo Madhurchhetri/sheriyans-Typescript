@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useAuth } from '../hook/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
+import ContinueWithGoogle from '../components/ContinueWithGoogle'
 
 const Login = () => {
   const { handleLogin } = useAuth()
@@ -128,6 +129,8 @@ const Login = () => {
               {loading ? 'Signing in…' : 'Sign In'}
             </button>
           </div>
+
+          <ContinueWithGoogle/>
 
         </form>
 
