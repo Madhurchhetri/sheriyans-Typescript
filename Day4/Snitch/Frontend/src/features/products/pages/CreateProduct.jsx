@@ -146,7 +146,7 @@ const CreateProduct = () => {
       if (draft) formData.append("status", "draft");
       images.forEach(({ file }) => formData.append("images", file));
       await handleCreateProduct(formData);
-      navigate("/seller/products");
+      navigate("/seller/dashboard");
     } catch (err) {
       setError(err?.response?.data?.message || "Something went wrong.");
     } finally {

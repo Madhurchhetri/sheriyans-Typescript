@@ -11,7 +11,7 @@ export const useAuth = () => {
         try {
             const data = await register({ email, password, fullname, contact, isSeller })
             dispatch(setUser(data.user))
-            return data
+            return data.user
         } catch (err) {
             dispatch(setError(err?.response?.data?.message || 'Registration failed'))
             throw err
@@ -25,7 +25,7 @@ export const useAuth = () => {
         try {
             const data = await login({ email, password })
             dispatch(setUser(data.user))
-            return data
+            return data.user
         } catch (err) {
             dispatch(setError(err?.response?.data?.message || 'Login failed'))
             throw err
@@ -35,12 +35,17 @@ export const useAuth = () => {
     }
 
     async function handleGetMe() {
+        dispatch(setLoading(true))
         try {
+            
             const data = await getMe()
             dispatch(setUser(data.user))
             return data.user
-        } catch {
+        } catch(err) {
+            console.log(err);
             // Not logged in — silently ignore
+        } finally {
+            dispatch(setLoading(false))
         }
     }
 

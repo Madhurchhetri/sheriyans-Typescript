@@ -25,8 +25,13 @@ const Login = () => {
     setLoading(true)
     setError(null)
     try {
-      await handleLogin(form)
-      navigate('/')
+
+      const user = await handleLogin(form)
+      if(user.role === "seller"){
+        navigate('/seller/dashboard')
+      }else{
+        navigate('/')
+      }
     } catch (err) {
       setError(err?.response?.data?.message || 'Login failed. Please check your credentials.')
     } finally {

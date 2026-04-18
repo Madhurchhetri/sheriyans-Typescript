@@ -9,7 +9,7 @@ import DeleteModal from "../components/seller/DeleteModal";
 import Stat from "../components/seller/Stat";
 import { Link } from "react-router-dom";
 
-const GetSellerProduct = () => {
+const Dashboard = () => {
     const { handleGetSellerProduct, handleDeleteProduct } = useProduct();
 
     const { sellerProducts, loading } = useSelector((s) => s.product);
@@ -23,9 +23,7 @@ const GetSellerProduct = () => {
 
     useEffect(() => {
         handleGetSellerProduct();
-        handleGetMe().then((res) => {
-            console.log("GET ME RESPONSE:", res);
-        });
+       
     }, []);
 
     const confirmDelete = async () => {
@@ -160,4 +158,4 @@ const GetSellerProduct = () => {
     );
 };
 
-export default GetSellerProduct;
+export default Dashboard;

@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
-import { createProduct, getSellerProduct, deleteProduct } from "../service/product.api";
+import { createProduct, getSellerProduct, deleteProduct, getAllProducts ,getProductById } from "../service/product.api";
 import {
     getSellerProductSuccess,
     deleteProductSuccess,
+    setProducts,
 } from "../state/product.slice";
 
 
@@ -21,14 +22,28 @@ export const useProduct = () => {
         return data.products;
     }
 
+    async function handleGetAllProducts(){
+        const data = await getAllProducts();
+        dispatch(setProducts(data.products))
+    }
+        
+
     async function handleDeleteProduct(productId) {
         await deleteProduct(productId);
         dispatch(deleteProductSuccess(productId));
     }
 
+    async function handleGetProductById(productId){
+        const data = await getProductById(productId);
+        return data.product;
+    }
+        
+
     return {
         handleCreateProduct,
         handleGetSellerProduct,
         handleDeleteProduct,
+        handleGetAllProducts,
+        handleGetProductById,
     };
 };

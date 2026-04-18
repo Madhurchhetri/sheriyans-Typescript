@@ -108,19 +108,15 @@ export const googleCallback = async (req, res) => {
 
 export const getMe = async (req, res) => {
     const user = req.user;
-        if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "User not authenticated",
-      });
-    }
+
     res.status(200).json({
-        message: "User profile fetched successfully",
+        message: "User fetched successfully",
+        success: true,
         user: {
             id: user._id,
             email: user.email,
-            fullname: user.fullname,
             contact: user.contact,
+            fullname: user.fullname,
             role: user.role
         }
     })

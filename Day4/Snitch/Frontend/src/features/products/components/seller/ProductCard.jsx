@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { getPrice, timeAgo } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, onDelete }) => {
   const [imgError, setImgError] = useState(false);
+
+  const navigate = useNavigate();
 
   const resolveUrl = (img) =>
     typeof img === "string" ? img : img?.url ?? null;
@@ -12,7 +15,9 @@ const ProductCard = ({ product, onDelete }) => {
   const price = getPrice(product);
 
   return (
-    <div className="bg-[#1C1B1B] rounded-2xl overflow-hidden">
+    <div 
+    onClick={()=>{navigate(`/seller/product/${product._id}`)}}
+    className="bg-[#1C1B1B] rounded-2xl overflow-hidden">
       
       {/* Image */}
       <div className="aspect-[4/3] bg-[#131313]">
@@ -30,7 +35,7 @@ const ProductCard = ({ product, onDelete }) => {
       </div>
 
       {/* Body */}
-      <div className="p-4 flex flex-col gap-2">
+      <div className="p-4 flex flex-col gap-2" >
         <h3 className="text-white font-semibold">
           {product.title || "Untitled"}
         </h3>

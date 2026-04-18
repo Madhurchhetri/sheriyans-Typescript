@@ -5,6 +5,7 @@ const productSlice = createSlice({
     name : 'product',
     initialState : { 
         sellerProducts : [],
+        products : [],
         loading : false,
         error : null,
     },
@@ -37,6 +38,15 @@ const productSlice = createSlice({
                 (p) => p._id !== action.payload
             );
         },
+        setProducts : (state,action) => {
+            state.products = action.payload;
+        },
+        setLoading : (state,action) => {
+            state.loading = action.payload;
+        },
+        setError : (state,action) => {
+            state.error = action.payload;
+        },
     }
 })
 
@@ -48,6 +58,9 @@ export const {
     getSellerProductSuccess,
     getSellerProductFailure,
     deleteProductSuccess,
+    setProducts,
+    setLoading,
+    setError,
 } = productSlice.actions;
 
 export default productSlice.reducer;
