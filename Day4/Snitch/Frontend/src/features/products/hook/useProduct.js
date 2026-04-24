@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { createProduct, getSellerProduct, deleteProduct, getAllProducts ,getProductById } from "../service/product.api";
+import { createProduct, getSellerProduct, deleteProduct, getAllProducts ,getProductById, addProductVariant } from "../service/product.api";
 import {
     getSellerProductSuccess,
     deleteProductSuccess,
@@ -37,6 +37,11 @@ export const useProduct = () => {
         const data = await getProductById(productId);
         return data.product;
     }
+
+    async function handleAddProductVariant(productId,newProductVariant){
+        const data = await addProductVariant(productId,newProductVariant);
+        return data.product;
+    }
         
 
     return {
@@ -45,5 +50,6 @@ export const useProduct = () => {
         handleDeleteProduct,
         handleGetAllProducts,
         handleGetProductById,
+        handleAddProductVariant,
     };
 };
