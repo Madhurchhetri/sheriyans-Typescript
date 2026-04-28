@@ -13,6 +13,7 @@ import SellerProductDetails from '../features/products/pages/SellerProductDetail
 import Cart from '../features/cart/pages/Cart'
 import ProductDetail from '../features/products/pages/ProductDEtail'
 import AppLayout from './AppLayout'
+import OrderSucess from '../features/cart/pages/OrderSucess'
 
 const App = () => {
   const { handleGetMe } = useAuth()
@@ -38,6 +39,7 @@ const App = () => {
           <Route path='/seller/dashboard' element={<Protected role='seller'><Dashboard /></Protected>}/>
           <Route path='/seller/product/:productId' element={<Protected role='seller'><SellerProductDetails /></Protected>}/>
           <Route path='/cart' element={<Protected><Cart/></Protected>}/>
+          <Route path='/order-success' element={<Protected><OrderSucess /></Protected>}/>
      
       </Route>
 

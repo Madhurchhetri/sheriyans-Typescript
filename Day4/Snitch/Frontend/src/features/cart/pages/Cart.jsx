@@ -23,9 +23,10 @@ const tokens = {
 
 const Cart = () => {
     const cart = useSelector(state => state.cart)
-    const { handleGetCart, handleIncrementCartItem } = useCart()
+    const { handleGetCart, handleIncrementCartItem, handleCreateCartOrder, handleVerifyCartOrder } = useCart()
     const navigate = useNavigate()
     const { error, isLoading, Razorpay } = useRazorpay();
+    const user = useSelector(state => state.user)
 
     /* Local quantity state — key: cartItem._id, value: number */
     const [ quantities, setQuantities ] = useState({})
@@ -34,35 +35,6 @@ const Cart = () => {
         handleGetCart()
     }, [])
 
-    console.log(cart)
-
-   const handlePayment = () => {
-    const options = {
-      key: "YOUR_RAZORPAY_KEY",
-      amount: 50000, // Amount in paise
-      currency: "INR",
-      name: "Test Company",
-      description: "Test Transaction",
-      order_id: "order_9A33XWu170gUtm", // Generate order_id on server
-      handler: (response) => {
-        console.log(response);
-        alert("Payment Successful!");
-      },
-      prefill: {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        contact: "9999999999",
-      },
-      theme: {
-        color: "#F37254",
-      },
-    };
-    
-    const razorpay = new Razorpay(options);
-    razorpay.open();
-}
-
-    
 
     const changeQty = (id, delta) => {
         setQuantities(prev => ({
@@ -70,9 +42,6 @@ const Cart = () => {
             [ id ]: Math.max(1, (prev[ id ] ?? 1) + delta),
         }))
     }
-
-
-
     /* ─── Helpers ─── */
     const getVariantDetails = (product, variantId) => {
         if (!product?.variants || !variantId) return null
@@ -88,6 +57,41 @@ const Cart = () => {
     const formatCurrency = (amount, currency = 'INR') =>
         `${currency} ${Number(amount).toLocaleString('en-IN')}`
 
+
+    async function handleCheckout() {
+        const order = await handleCreateCartOrder()
+        console.log(order)
+
+
+        const options = {
+            key: "rzp_test_ShhOwqkEMrEZX6",
+            // amount: order.amount, // Amount in paise
+            currency: order.currency,
+            name: "Snitch",
+            description: "Test Transaction",
+            order_id: order.id, // Generate order_id on server
+            handler: async (response) => {
+                
+
+                const isValid = await handleVerifyCartOrder(response)
+
+                if (isValid) {
+                    navigate(`/order-success?order_id=${response?.razorpay_order_id}`)
+                }
+            },
+            prefill: {
+                name: user?.fullname,
+                email: user?.email,
+                contact: user?.contact,
+            },
+            theme: {
+                color: tokens.primary,
+            },
+        };
+
+        const razorpayInstance = new Razorpay(options);
+        razorpayInstance.open();
+    }
 
     /* ─── Empty state ─── */
     if (!cart?.items?.length) {
@@ -481,6 +485,7 @@ const Cart = () => {
                                         e.currentTarget.style.backgroundColor = tokens.onSurface
                                         e.currentTarget.style.color = tokens.surface
                                     }}
+                                    onClick={handleCheckout}
                                 >
                                     Proceed to Checkout
                                 </button>
